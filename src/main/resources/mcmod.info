@@ -1,0 +1,12 @@
+[
+  {
+    "modid": "primalchests",
+    "name": "PrimalChests",
+    "description": "adds more chests",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "authorList": [
+      "Jared"
+    ]
+  }
+]

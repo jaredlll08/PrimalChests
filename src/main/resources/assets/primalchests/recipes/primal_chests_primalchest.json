@@ -1,0 +1,21 @@
+{
+  "result": {
+    "item": "primalchests:primal_chest"
+  },
+  "pattern": [
+    "www",
+    "wcw",
+    "www"
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "c": {
+      "ore": "chest",
+      "type": "forge:ore_dict"
+    },
+    "w": {
+      "ore": "plankWood",
+      "type": "forge:ore_dict"
+    }
+  }
+}

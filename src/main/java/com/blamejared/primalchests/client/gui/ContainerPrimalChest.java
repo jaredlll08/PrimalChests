@@ -1,0 +1,89 @@
+package com.blamejared.primalchests.client.gui;
+
+import com.blamejared.primalchests.tileentities.TileEntityPrimalChest;
+import net.minecraft.entity.player.*;
+import net.minecraft.inventory.*;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.SlotItemHandler;
+
+public class ContainerPrimalChest extends Container {
+    
+    public TileEntityPrimalChest tile;
+    
+    public ContainerPrimalChest(InventoryPlayer invPlayer, TileEntityPrimalChest tile) {
+        this.tile = tile;
+        for(int i = 0; i < tile.itemStackHandler.getSlots(); i++) {
+            addSlotToContainer(new SlotItemHandler(tile.itemStackHandler, i, 8 + 18 * i, 18));
+        }
+        
+        for(int x = 0; x < 9; x++) {
+            addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 142));
+        }
+        
+        for(int y = 0; y < 3; y++) {
+            for(int x = 0; x < 9; x++) {
+                addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 8 + 18 * x, 84 + y * 18));
+            }
+        }
+        
+    }
+    
+    
+    /**
+     * Determines whether supplied player can use this container
+     */
+    public boolean canInteractWith(EntityPlayer playerIn) {
+        return tile.getDistanceSq(playerIn.posX, playerIn.posY, playerIn.posZ) < 64;
+    }
+    
+    /**
+     * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
+     * inventory and the other inventory(s).
+     *
+     * @param playerIn Player that interacted with this {@code Container}.
+     * @param index Index of the {@link Slot}. This index is relative to the list of slots in this {@code Container},
+     * {@link #inventorySlots}.
+     */
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    {
+        ItemStack itemstack = ItemStack.EMPTY;
+        Slot slot = (Slot)this.inventorySlots.get(index);
+        
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack itemstack1 = slot.getStack();
+            itemstack = itemstack1.copy();
+            
+            if (index < tile.itemStackHandler.getSlots())
+            {
+                if (!this.mergeItemStack(itemstack1, tile.itemStackHandler.getSlots(), this.inventorySlots.size(), true))
+                {
+                    return ItemStack.EMPTY;
+                }
+            }
+            else if (!this.mergeItemStack(itemstack1, 0, tile.itemStackHandler.getSlots(), false))
+            {
+                return ItemStack.EMPTY;
+            }
+            
+            if (itemstack1.isEmpty())
+            {
+                slot.putStack(ItemStack.EMPTY);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
+        }
+        
+        return itemstack;
+    }
+    
+    /**
+     * Called when the container is closed.
+     */
+    public void onContainerClosed(EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+    }
+    
+}
