@@ -36,8 +36,6 @@ public class PrimalChests {
         PBlocks.preInit();
         GameRegistry.registerTileEntity(TileEntityPrimalChest.class, "tile_primal_chest");
         GameRegistry.registerTileEntity(TileEntityPrimalChestAdvanced.class, "tile_primal_chest_advanced");
-        
-        
     }
     
     @Mod.EventHandler

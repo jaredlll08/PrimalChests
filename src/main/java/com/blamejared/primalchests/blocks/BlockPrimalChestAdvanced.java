@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.*;
 
 import javax.annotation.Nullable;
 
-public class BlockPrimalChestAdvanced extends Block implements IHasGui {
+public class BlockPrimalChestAdvanced extends Block {
     
     public BlockPrimalChestAdvanced() {
         super(Material.WOOD);
@@ -86,7 +86,7 @@ public class BlockPrimalChestAdvanced extends Block implements IHasGui {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
-            playerIn.openGui(PrimalChests.INSTANCE, GuiCarrier.BLOCK.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+            playerIn.openGui(PrimalChests.INSTANCE, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
@@ -98,13 +98,4 @@ public class BlockPrimalChestAdvanced extends Block implements IHasGui {
         tile.facing = placer.getHorizontalFacing().getOpposite();
     }
     
-    @Override
-    public Gui getClientGuiElement(int id, EntityPlayer player, World world, BlockPos blockPos) {
-        return new GuiPrimalChestAdvanced(player.inventory, (TileEntityPrimalChestAdvanced) world.getTileEntity(blockPos));
-    }
-    
-    @Override
-    public Container getServerGuiElement(int id, EntityPlayer player, World world, BlockPos blockPos) {
-        return new ContainerPrimalChestAdvanced(player.inventory, (TileEntityPrimalChestAdvanced) world.getTileEntity(blockPos));
-    }
 }

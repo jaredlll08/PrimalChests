@@ -1,7 +1,10 @@
 package com.blamejared.primalchests.client.gui;
 
 import com.blamejared.primalchests.PrimalChests;
+import com.blamejared.primalchests.client.gui.advanced.*;
+import com.blamejared.primalchests.tileentities.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.*;
@@ -18,19 +21,44 @@ public class GuiHandler implements IGuiHandler {
     
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-        BlockPos blockPos = new BlockPos(x, y, z);
-        IHasGui openableGUI = this.getHasGUI(id, player, world, blockPos);
-        return openableGUI != null ? openableGUI.getServerGuiElement(id, player, world, blockPos) : null;
+        BlockPos pos = new BlockPos(x, y, z);
+        TileEntity te = world.getTileEntity(pos);
+        if(te == null) {
+            return null;
+        }
+        switch(id) {
+            case 0:
+                if(te instanceof TileEntityPrimalChest)
+                    return new ContainerPrimalChest(player.inventory, (TileEntityPrimalChest) te);
+                break;
+            case 1:
+                if(te instanceof TileEntityPrimalChestAdvanced)
+                    return new ContainerPrimalChestAdvanced(player.inventory, (TileEntityPrimalChestAdvanced) te);
+                break;
+    
+        }
+        return null;
     }
     
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, final int z) {
-        BlockPos blockPos = new BlockPos(x, y, z);
-        IHasGui openableGUI = this.getHasGUI(id, player, world, blockPos);
-        return openableGUI != null ? openableGUI.getClientGuiElement(id, player, world, blockPos) : null;
+        BlockPos pos = new BlockPos(x, y, z);
+        TileEntity te = world.getTileEntity(pos);
+        if(te == null) {
+            return null;
+        }
+        switch(id) {
+            case 0:
+                if(te instanceof TileEntityPrimalChest)
+                    return new GuiPrimalChest(player.inventory, (TileEntityPrimalChest) te);
+                break;
+            case 1:
+                if(te instanceof TileEntityPrimalChestAdvanced)
+                    return new GuiPrimalChestAdvanced(player.inventory, (TileEntityPrimalChestAdvanced) te);
+                break;
+        
+        }
+        return null;
     }
     
-    private IHasGui getHasGUI(int id, EntityPlayer player, World world, BlockPos blockPos) {
-        return GuiCarrier.values()[id].getHasGUI(player, world, blockPos);
-    }
 }

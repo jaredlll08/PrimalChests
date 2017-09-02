@@ -23,6 +23,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void registerGuis() {
         super.registerGuis();
-        new GuiHandler();
+        
     }
 }
