@@ -2,7 +2,7 @@ package com.blamejared.primalchests.client.gui;
 
 import com.blamejared.primalchests.reference.Reference;
 import com.blamejared.primalchests.tileentities.TileEntityPrimalChest;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -31,10 +31,19 @@ public class GuiPrimalChest extends GuiContainer {
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
         this.fontRenderer.drawString("Primal Chest", 8, 6, 4210752);
         this.fontRenderer.drawString(player.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
-    
+    /**
+     * Draws the screen and all the components in it.
+     */
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
     /**
      * Draws the background layer of this container (behind the items).
      */
