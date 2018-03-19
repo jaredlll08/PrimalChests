@@ -27,9 +27,13 @@ public class RenderTileEntityPrimalChestAdvanced extends TileEntitySpecialRender
         if(te == null || te.isInvalid()) {
             return;
         }
-        
-        EnumFacing facing = te.getFacing();
-        
+    
+        EnumFacing facing = EnumFacing.SOUTH;
+    
+        if(te.hasWorld()) {
+            facing = te.getFacing();
+        }
+    
         if(destroyStage >= 0) {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
@@ -40,15 +44,13 @@ public class RenderTileEntityPrimalChestAdvanced extends TileEntitySpecialRender
         } else {
             this.bindTexture(new ResourceLocation(Reference.MOD_ID, "textures/models/primal_chest_advanced.png"));
         }
-        
+    
         GlStateManager.pushMatrix();
-        
-        
         GlStateManager.color(1F, 1F, 1F, 1F);
         GlStateManager.translate((float) x, (float) y + 1F, (float) z + 1F);
         GlStateManager.scale(1F, -1F, -1F);
         GlStateManager.translate(0.5F, 0.5F, 0.5F);
-        
+    
         switch(facing) {
             case NORTH: {
                 GlStateManager.rotate(180F, 0F, 1F, 0F);
@@ -71,27 +73,26 @@ public class RenderTileEntityPrimalChestAdvanced extends TileEntitySpecialRender
                 break;
             }
         }
-        
+    
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-        
-        float lidangle = 0;//te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
-        
-        lidangle = 1F - lidangle;
-        lidangle = 1F - lidangle * lidangle * lidangle;
-        
-        
-        this.model.chestLid.rotateAngleX = -lidangle * halfPI;
+    
+        //        float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+        //
+        //        lidangle = 1F - lidangle;
+        //        lidangle = 1F - lidangle * lidangle * lidangle;
+        //
+        //        this.model.chestLid.rotateAngleX = -lidangle * halfPI;
         // Render the chest itself
         this.model.renderAll();
-        
+    
         if(destroyStage >= 0) {
             GlStateManager.matrixMode(5890);
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5888);
         }
-        
+    
+    
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
-        
     }
 }

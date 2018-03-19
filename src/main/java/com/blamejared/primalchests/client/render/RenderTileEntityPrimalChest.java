@@ -2,9 +2,14 @@ package com.blamejared.primalchests.client.render;
 
 import com.blamejared.primalchests.reference.Reference;
 import com.blamejared.primalchests.tileentities.TileEntityPrimalChest;
+import com.google.common.primitives.SignedBytes;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderEntityItem;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 
 import java.util.Random;
@@ -30,7 +35,11 @@ public class RenderTileEntityPrimalChest extends TileEntitySpecialRenderer<TileE
             return;
         }
         
-        EnumFacing facing = te.getFacing();
+        EnumFacing facing = EnumFacing.SOUTH;
+        
+        if(te.hasWorld()) {
+            facing = te.getFacing();
+        }
         
         if(destroyStage >= 0) {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
@@ -44,8 +53,6 @@ public class RenderTileEntityPrimalChest extends TileEntitySpecialRenderer<TileE
         }
         
         GlStateManager.pushMatrix();
-        
-        
         GlStateManager.color(1F, 1F, 1F, 1F);
         GlStateManager.translate((float) x, (float) y + 1F, (float) z + 1F);
         GlStateManager.scale(1F, -1F, -1F);
@@ -75,13 +82,13 @@ public class RenderTileEntityPrimalChest extends TileEntitySpecialRenderer<TileE
         }
         
         GlStateManager.translate(-0.5F, -0.5F, -0.5F);
-        float lidangle = 0;//te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
         
-        lidangle = 1F - lidangle;
-        lidangle = 1F - lidangle * lidangle * lidangle;
-        
-        
-        this.model.chestLid.rotateAngleX = -lidangle * halfPI;
+        //        float lidangle = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * partialTicks;
+        //
+        //        lidangle = 1F - lidangle;
+        //        lidangle = 1F - lidangle * lidangle * lidangle;
+        //
+        //        this.model.chestLid.rotateAngleX = -lidangle * halfPI;
         // Render the chest itself
         this.model.renderAll();
         
@@ -91,8 +98,8 @@ public class RenderTileEntityPrimalChest extends TileEntitySpecialRenderer<TileE
             GlStateManager.matrixMode(5888);
         }
         
+        
         GlStateManager.popMatrix();
         GlStateManager.color(1F, 1F, 1F, 1F);
     }
-    
 }
