@@ -32,8 +32,12 @@ public class ContainerPrimalChest extends Container {
     /**
      * Determines whether supplied player can use this container
      */
-    public boolean canInteractWith(EntityPlayer playerIn) {
-        return tile.getDistanceSq(playerIn.posX, playerIn.posY, playerIn.posZ) < 64;
+    public boolean canInteractWith(EntityPlayer player) {
+        if(player.world.getTileEntity(tile.getPos()) != tile) {
+            return false;
+        } else {
+            return player.getDistanceSq((double) tile.getPos().getX() + 0.5D, (double) tile.getPos().getY() + 0.5D, (double) tile.getPos().getZ() + 0.5D) <= 64.0D;
+        }
     }
     
     /**
@@ -41,37 +45,28 @@ public class ContainerPrimalChest extends Container {
      * inventory and the other inventory(s).
      *
      * @param playerIn Player that interacted with this {@code Container}.
-     * @param index Index of the {@link Slot}. This index is relative to the list of slots in this {@code Container},
-     * {@link #inventorySlots}.
+     * @param index    Index of the {@link Slot}. This index is relative to the list of slots in this {@code Container},
+     *                 {@link #inventorySlots}.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-    {
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+        Slot slot = (Slot) this.inventorySlots.get(index);
         
-        if (slot != null && slot.getHasStack())
-        {
+        if(slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
             
-            if (index < tile.itemStackHandler.getSlots())
-            {
-                if (!this.mergeItemStack(itemstack1, tile.itemStackHandler.getSlots(), this.inventorySlots.size(), true))
-                {
+            if(index < tile.itemStackHandler.getSlots()) {
+                if(!this.mergeItemStack(itemstack1, tile.itemStackHandler.getSlots(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.mergeItemStack(itemstack1, 0, tile.itemStackHandler.getSlots(), false))
-            {
+            } else if(!this.mergeItemStack(itemstack1, 0, tile.itemStackHandler.getSlots(), false)) {
                 return ItemStack.EMPTY;
             }
             
-            if (itemstack1.isEmpty())
-            {
+            if(itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
-            {
+            } else {
                 slot.onSlotChanged();
             }
         }
