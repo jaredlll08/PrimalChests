@@ -11,6 +11,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -86,6 +87,7 @@ public class BlockPrimalChestAdvanced extends Block {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
+            worldIn.playSound(null, pos, SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.BLOCKS, 1.0F, 1.0F);
             playerIn.openGui(PrimalChests.INSTANCE, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
