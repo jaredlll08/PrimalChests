@@ -29,12 +29,12 @@ displayName="Primal Chests" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="primalchestsicon.png" #optional
 # A text field displayed in the mod UI
-credits="Inspired by the 1.12.2 Sevtech mod PrimalChests" #optional
+credits="Port of the popular SevTech 1.12.2 mod" #optional
 # A text field displayed in the mod UI
 authors="SteamPunkNation" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-An updated version of PrimalChests with permission from the original author(s).
+An updated version of PrimalChests!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.primalchests]] #optional
@@ -53,6 +53,6 @@ An updated version of PrimalChests with permission from the original author(s).
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.16.5,1.17)"
+    versionRange="[1.16.5)"
     ordering="NONE"
     side="BOTH"
