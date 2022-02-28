@@ -1,0 +1,20 @@
+{
+  "type":"minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WCW",
+    "WWW"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "item": "primalchests:primal_chest"
+    }
+  },
+  "result": {
+    "item": "primalchests:advanced_primal_chest",
+    "count": 1
+  }
+}
